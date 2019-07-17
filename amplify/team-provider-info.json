@@ -1,0 +1,19 @@
+{
+    "carsilon": {
+        "awscloudformation": {
+            "AuthRoleName": "carsilon2-carsilon-20190716130830-authRole",
+            "UnauthRoleArn": "arn:aws:iam::795131261543:role/carsilon2-carsilon-20190716130830-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::795131261543:role/carsilon2-carsilon-20190716130830-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "carsilon2-carsilon-20190716130830-deployment",
+            "UnauthRoleName": "carsilon2-carsilon-20190716130830-unauthRole",
+            "StackName": "carsilon2-carsilon-20190716130830",
+            "StackId": "arn:aws:cloudformation:us-east-2:795131261543:stack/carsilon2-carsilon-20190716130830/aa61d8e0-a7b1-11e9-9843-0285144e27ac"
+        },
+        "categories": {
+            "auth": {
+                "carsilon2a0a5e23e": {}
+            }
+        }
+    }
+}

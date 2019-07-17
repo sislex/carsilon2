@@ -1,0 +1,11 @@
+type Routes @model {
+  id: ID!
+  username: String!
+  userData: String!
+  timeStart: String!
+  addressStart: String!
+  addressFinish: String!
+  coordinatesStart: String!
+  coordinatesFinish: String!
+  description: String
+}

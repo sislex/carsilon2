@@ -1,0 +1,68 @@
+{
+    "identityPoolName": "carsilon2a0a5e23e_identitypool_a0a5e23e",
+    "allowUnauthenticatedIdentities": true,
+    "lambdaLogPolicy": "carsil_a0a5e23e_lambda_log_policy",
+    "openIdLambdaRoleName": "carsil_a0a5e23e_openid_lambda_role",
+    "openIdRolePolicy": "carsil_a0a5e23e_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "carsil_a0a5e23e_openid_lambda_iam_policy",
+    "openIdLogPolicy": "carsil_a0a5e23e_openid_lambda_log_policy",
+    "userPoolName": "carsilon2a0a5e23e_userpool_a0a5e23e",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "carsila0a5e23e_sns-role",
+    "roleExternalId": "carsila0a5e23e_role_external_id",
+    "policyName": "carsila0a5e23e-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientName": "carsila0a5e23e_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "carsila0a5e23e_totp_lambda_role",
+    "mfaLambdaLogPolicy": "carsila0a5e23e_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "carsila0a5e23e_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "carsila0a5e23e_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "carsila0a5e23e_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "carsila0a5e23e_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "carsila0a5e23e_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "carsilon2a0a5e23e",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "default"
+}

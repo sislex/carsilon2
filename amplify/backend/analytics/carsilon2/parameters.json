@@ -1,0 +1,20 @@
+{
+    "appName": "carsilon2",
+    "roleName": "pinpointLambdaRole639743fd",
+    "cloudWatchPolicyName": "cloudWatchPolicy639743fd",
+    "pinpointPolicyName": "pinpointPolicy639743fd",
+    "authPolicyName": "pinpoint_amplify_639743fd",
+    "unauthPolicyName": "pinpoint_amplify_639743fd",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
