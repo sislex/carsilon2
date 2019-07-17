@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AlertController } from '@ionic/angular';
 
-import { UserData } from '../../providers/user-data';
+import { AuthService } from '../../services/auth';
+import { Auth } from 'aws-amplify';
 
 
 @Component({
@@ -11,67 +12,95 @@ import { UserData } from '../../providers/user-data';
   templateUrl: 'account.html',
   styleUrls: ['./account.scss'],
 })
-export class AccountPage implements AfterViewInit {
-  username: string;
+export class AccountPage implements OnInit {
+  public showLogo = false;
 
   constructor(
     public alertCtrl: AlertController,
     public router: Router,
-    public userData: UserData
+    public authService: AuthService
   ) { }
 
-  ngAfterViewInit() {
-    this.getUsername();
-  }
-
-  updatePicture() {
-    console.log('Clicked to update picture');
+  ngOnInit() {
+    if (this.authService.user && this.authService.user.attributes['custom:logo']) {
+      this.showLogo = true;
+    }
   }
 
   // Present an alert with the current username populated
   // clicking OK will update the username and display it
   // clicking Cancel will close the alert and do nothing
-  async changeUsername() {
+  async changePhone() {
     const alert = await this.alertCtrl.create({
-      header: 'Change Username',
+      header: 'Change Phone Number',
       buttons: [
         'Cancel',
         {
           text: 'Ok',
           handler: (data: any) => {
-            this.userData.setUsername(data.username);
-            this.getUsername();
+            this.setPhone(data['phone_number']);
           }
         }
       ],
       inputs: [
         {
           type: 'text',
-          name: 'username',
-          value: this.username,
-          placeholder: 'username'
+          name: 'phone_number',
+          value: this.authService.user.attributes['phone_number'],
+          placeholder: 'Phone'
         }
       ]
     });
     await alert.present();
   }
 
-  getUsername() {
-    this.userData.getUsername().then((username) => {
-      this.username = username;
-    });
-  }
-
-  changePassword() {
-    console.log('Clicked to change password');
-  }
-
   logout() {
-    this.userData.logout();
-    this.router.navigateByUrl('/login');
+    Auth.signOut()
+      .then(data => {
+        console.log(data);
+        this.authService.user = null;
+        this.router.navigateByUrl('/login');
+      })
+      .catch(err => console.log(err));
+
   }
 
   support() {
     this.router.navigateByUrl('/support');
+  }
+
+  onImagePicked($event) {
+    // console.log($event);
+  }
+  onImageLoaded($event) {
+    // console.log($event);
+  }
+
+  async setPhone(phone) {
+    const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+    Auth.updateUserAttributes(currentAuthenticatedUser, {
+      'phone_number': phone,
+    }).then(async data => {
+      Auth.currentUserInfo().then((user) => {
+        this.authService.user = user;
+        this.showLogo = true;
+      });
+    })
+      .catch(err => console.log(err));
+  }
+
+  async onImageUploaded($event) {
+    const imagePath = $event.key;
+    const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+    this.showLogo = false;
+    Auth.updateUserAttributes(currentAuthenticatedUser, {
+      'custom:logo': imagePath,
+    }).then(async data => {
+      Auth.currentUserInfo().then((user) => {
+        this.authService.user = user;
+        this.showLogo = true;
+      });
+    })
+      .catch(err => console.log(err));
   }
 }

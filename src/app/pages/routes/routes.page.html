@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Routes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top">
+  <section>
+    <ion-button expand="block" color="secondary" routerLink="/app/tabs/routes/route/1">Add new route</ion-button>
+  </section>
+
+  <ion-list>
+    <ion-item-group class="actual">
+      <ion-item-divider sticky>
+        <ion-label>
+          Actual routes (1)
+        </ion-label>
+      </ion-item-divider>
+
+      <ion-item-sliding>
+        <ion-item routerLink="/app/tabs/routes/route/1">
+          <ion-label>
+            <h3>Rotmistrova st. 32</h3>
+            <p>
+              9:30 &mdash; 10:00: Alex Rozhnov
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="light">
+            Hide
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-item-group>
+
+    <ion-item-group class="old">
+      <ion-item-divider sticky>
+        <ion-label>
+          Old routes (2)
+        </ion-label>
+      </ion-item-divider>
+
+      <ion-item-sliding>
+        <ion-item routerLink="/app/tabs/routes/route/1">
+          <ion-label>
+            <h3>name h3</h3>
+            <p>
+              from &mdash; to: location
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="danger">
+            Remove
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+      <ion-item-sliding>
+        <ion-item routerLink="/app/tabs/routes/route/1">
+          <ion-label>
+            <h3>name h3</h3>
+            <p>
+              from &mdash; to: location
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="danger">
+            Remove
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

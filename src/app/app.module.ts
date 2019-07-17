@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {AmplifyService} from 'aws-amplify-angular';
+import {AuthService} from './services/auth';
 
 @NgModule({
   imports: [
@@ -24,7 +26,7 @@ import { environment } from '../environments/environment';
     })
   ],
   declarations: [AppComponent],
-  providers: [InAppBrowser, SplashScreen, StatusBar],
+  providers: [InAppBrowser, SplashScreen, StatusBar, AmplifyService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

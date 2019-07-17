@@ -24,7 +24,7 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list *ngIf="loggedIn">
+        <ion-list *ngIf="authService.user">
           <ion-list-header>
             Account
           </ion-list-header>
@@ -48,7 +48,7 @@
           </ion-menu-toggle>
 
           <ion-menu-toggle autoHide="false">
-            <ion-item button (click)="logout()">
+            <ion-item button (click)="signOut()">
               <ion-icon slot="start" name="log-out"></ion-icon>
               <ion-label>
                 Logout
@@ -58,7 +58,7 @@
 
         </ion-list>
 
-        <ion-list *ngIf="!loggedIn">
+        <ion-list *ngIf="!authService.user">
           <ion-list-header>
             Account
           </ion-list-header>
@@ -67,7 +67,7 @@
             <ion-item routerLink="/login" routerDirection="root">
               <ion-icon slot="start" name="log-in"></ion-icon>
               <ion-label>
-                Login
+                Login/Signup
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -81,14 +81,6 @@
             </ion-item>
           </ion-menu-toggle>
 
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/signup" routerDirection="root">
-              <ion-icon slot="start" name="person-add"></ion-icon>
-              <ion-label>
-                Signup
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
         </ion-list>
 
         <ion-list>

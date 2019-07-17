@@ -1,10 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-
-import { UserData } from '../../providers/user-data';
-
-import { UserOptions } from '../../interfaces/user-options';
+import { Component } from '@angular/core';
 
 
 
@@ -14,24 +8,39 @@ import { UserOptions } from '../../interfaces/user-options';
   styleUrls: ['./login.scss'],
 })
 export class LoginPage {
-  login: UserOptions = { username: '', password: '' };
-  submitted = false;
-
-  constructor(
-    public userData: UserData,
-    public router: Router
-  ) { }
-
-  onLogin(form: NgForm) {
-    this.submitted = true;
-
-    if (form.valid) {
-      this.userData.login(this.login.username);
-      this.router.navigateByUrl('/app/tabs/schedule');
-    }
-  }
-
-  onSignup() {
-    this.router.navigateByUrl('/signup');
-  }
+  signUpConfig = {
+    header: 'Sign Up',
+    hideAllDefaults: true,
+    defaultCountryCode: '1',
+    signUpFields: [
+      {
+        label: 'Username',
+        key: 'username',
+        required: true,
+        displayOrder: 1,
+        type: 'string',
+      },
+      {
+        label: 'Password',
+        key: 'password',
+        required: true,
+        displayOrder: 2,
+        type: 'password'
+      },
+      {
+        label: 'Email',
+        key: 'email',
+        required: false,
+        displayOrder: 3,
+        type: 'string',
+      },
+      {
+        label: 'Phone Number',
+        key: 'phone_number',
+        required: true,
+        displayOrder: 4,
+        type: 'string'
+      },
+    ]
+  };
 }

@@ -4,12 +4,14 @@ import { IonicModule } from '@ionic/angular';
 
 import { AccountPage } from './account';
 import { AccountPageRoutingModule } from './account-routing.module';
+import {AmplifyIonicModule} from 'aws-amplify-angular';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    AccountPageRoutingModule
+    AccountPageRoutingModule,
+    AmplifyIonicModule
   ],
   declarations: [
     AccountPage,

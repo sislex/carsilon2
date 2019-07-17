@@ -10,6 +10,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 
 import { UserData } from './providers/user-data';
+import {AuthService} from './services/auth';
+import {Auth} from 'aws-amplify';
 
 @Component({
   selector: 'app-root',
@@ -20,14 +22,9 @@ import { UserData } from './providers/user-data';
 export class AppComponent implements OnInit {
   appPages = [
     {
-      title: 'Schedule',
-      url: '/app/tabs/schedule',
-      icon: 'calendar'
-    },
-    {
-      title: 'Speakers',
-      url: '/app/tabs/speakers',
-      icon: 'contacts'
+      title: 'My Routes',
+      url: '/app/tabs/routes',
+      icon: 'logo-model-s'
     },
     {
       title: 'Map',
@@ -53,6 +50,7 @@ export class AppComponent implements OnInit {
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
+    public authService: AuthService
   ) {
     this.initializeApp();
   }
@@ -121,5 +119,14 @@ export class AppComponent implements OnInit {
     this.menu.enable(false);
     this.storage.set('ion_did_tutorial', false);
     this.router.navigateByUrl('/tutorial');
+  }
+
+  signOut() {
+    Auth.signOut()
+      .then(data => {
+        console.log(data);
+        this.router.navigateByUrl('/login');
+      })
+      .catch(err => console.log(err));
   }
 }

@@ -1,0 +1,17 @@
+.actual {
+  ion-item-sliding {
+    ion-label {
+      border-left: 2px solid #69bb7b;
+      padding-left: 10px;
+    }
+  }
+}
+
+.old {
+  ion-item-sliding {
+    ion-label {
+      border-left: 2px solid var(--ion-color-primary);
+      padding-left: 10px;
+    }
+  }
+}

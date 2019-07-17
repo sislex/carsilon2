@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs-page';
 import { SchedulePage } from '../schedule/schedule';
+import {RoutesPage} from '../routes/routes.page';
 
 
 const routes: Routes = [
@@ -9,6 +10,19 @@ const routes: Routes = [
     path: 'tabs',
     component: TabsPage,
     children: [
+      {
+        path: 'routes',
+        children: [
+          {
+            path: '',
+            component: RoutesPage,
+          },
+          {
+            path: 'route/:sessionId',
+            loadChildren: '../route-form/route-form.module#RouteFormModule'
+          }
+        ]
+      },
       {
         path: 'schedule',
         children: [
