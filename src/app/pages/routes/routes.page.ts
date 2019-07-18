@@ -15,7 +15,7 @@ export class RoutesPage implements OnInit {
 
   async ngOnInit() {
     const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
-    this.myRoutes = allRoutes.data.listRoutess.items
+    this.myRoutes = allRoutes.data.listRoutess.items;
     console.log(this.myRoutes);
     this.submit();
   }
@@ -29,6 +29,14 @@ export class RoutesPage implements OnInit {
     //
     // const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: {id: allRoutes.data.listRoutess.items[0].id}}));
     // console.log(deleteRoute);
+  }
+
+  async remove(route) {
+    const obj = {id: route.id};
+    const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: obj}));
+    const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
+    this.myRoutes = allRoutes.data.listRoutess.items;
+    console.log(this.myRoutes);
   }
 
 }

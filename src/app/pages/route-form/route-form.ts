@@ -33,6 +33,6 @@ export class RouteFormPage {
   }
 
   setAddress($event) {
-    console.log($event);
+    this.drive.addressFinish = $event.value;
   }
 }
