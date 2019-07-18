@@ -11,29 +11,26 @@
   <ion-list>
 
     <div class="ion-padding">
-      <search-field (result)=""></search-field>
-      <search-field></search-field>
 
       <ion-item>
-<!--      <ion-input required type="text" placeholder="From" [(ngModel)]="drive.addressStart" name="addressStart"></ion-input>-->
+        <ion-input required type="text" placeholder="From" [(ngModel)]="drive.addressStart" name="addressStart"></ion-input>
+      </ion-item>
 
-    </ion-item>
+      <ion-item>
+        <search-field (result)="setAddress($event)"></search-field>
+      </ion-item>
 
-    <ion-item>
-<!--      <ion-input required type="text" placeholder="To" [(ngModel)]="drive.addressFinish" name="addressFinish"></ion-input>-->
-    </ion-item>
-    </div>
+      <ion-item class="ion-margin">
+        <ion-label>Departure:</ion-label>
+        <ion-datetime (ngModelChange)="changeDate($event)" display-format="h:mm A" picker-format="h:mm A" [value]="drive.timeStart" [(ngModel)]="drive.timeStart" name="myDate"></ion-datetime>
+      </ion-item>
 
-    <div class="ion-padding">
-    <ion-item>
-      <ion-label>Departure:</ion-label>
-      <ion-datetime (ngModelChange)="changeDate($event)" display-format="h:mm A" picker-format="h:mm A" [value]="drive.timeStart" [(ngModel)]="drive.timeStart" name="myDate"></ion-datetime>
-    </ion-item>
+      <div class="ion-padding">
+        <ion-button expand="block" color="secondary" (click)="addRoute()">Add Route</ion-button>
+      </div>
     </div>
 
   </ion-list>
 
-  <div class="ion-padding">
-    <ion-button expand="block" color="secondary" (click)="addRoute()">Add Route</ion-button>
-  </div>
+
 </ion-content>
