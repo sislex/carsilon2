@@ -44,9 +44,9 @@
   --component-width-desktop: 460px;
   --component-width-mobile: 100%;
 
-  --color-primary: #13ccba;
+  --color-primary: #17a2b8;
   --color-primary-accent: #232F3E;
-  --color-primary-highlight: #FFC46D;
+  --color-primary-highlight: #18e7d3;
   
   --color-background:#232F3E;
 
@@ -78,7 +78,7 @@
   
   /** primary **/
   --ion-color-primary: linear-gradient(to bottom, #17a2b8 0%, #18e7d3 100%);
-  --ion-color-primary-rgb: 26,191,201;
+  --ion-color-primary-rgb: 24,231,211;
   --ion-color-primary-contrast: #fff;
   --ion-color-primary-contrast-rgb: 255,255,255;
   --ion-color-primary-shade: #232F3E;
@@ -94,7 +94,7 @@
 
   /** tertiary **/
   --ion-color-tertiary: #f4a942;
-  --ion-color-tertiary-rgb: 244,169,66;
+  --ion-color-tertiary-rgb: 24,231,211;
   --ion-color-tertiary-contrast: #fff;
   --ion-color-tertiary-contrast-rgb: 255,255,255;
   --ion-color-tertiary-shade: #d7953a;
