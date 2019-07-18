@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-
-import { ConferenceData } from '../../providers/conference-data';
-import { ActivatedRoute } from '@angular/router';
-import { UserData } from '../../providers/user-data';
+import {API, graphqlOperation} from 'aws-amplify';
+import * as mutations from '../../../graphql/mutations';
 
 @Component({
   selector: 'page-session-detail',
@@ -10,52 +8,26 @@ import { UserData } from '../../providers/user-data';
   templateUrl: 'route-form.html'
 })
 export class RouteFormPage {
-  session: any;
-  isFavorite = false;
-  defaultHref = '';
-  constructor(
-    private dataProvider: ConferenceData,
-    private userProvider: UserData,
-    private route: ActivatedRoute
-  ) {}
-  sessionClick(item: string) {
-    console.log('Clicked', item);
+
+  myDate;
+  public drive = {
+    addressStart: '',
+    addressFinish: '',
+    coordinatesStart: 'coordinatesStart',
+    coordinatesFinish: 'coordinatesFinish',
+    timeStart: '2019-07-18T07:43Z',
+    userData: 'userData',
+    username: 'username',
+  };
+
+  async addRoute() {
+    console.log(this.myDate);
+    console.log(this.drive);
+    const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.drive}));
+    console.log(newRoute);
   }
-  toggleFavorite() {
-    if (this.userProvider.hasFavorite(this.session.name)) {
-      this.userProvider.removeFavorite(this.session.name);
-      this.isFavorite = false;
-    } else {
-      this.userProvider.addFavorite(this.session.name);
-      this.isFavorite = true;
-    }
-  }
-  ionViewWillEnter() {
-    this.dataProvider.load().subscribe((data: any) => {
-      if (
-        data &&
-        data.schedule &&
-        data.schedule[0] &&
-        data.schedule[0].groups
-      ) {
-        const sessionId = this.route.snapshot.paramMap.get('sessionId');
-        for (const group of data.schedule[0].groups) {
-          if (group && group.sessions) {
-            for (const session of group.sessions) {
-              if (session && session.id === sessionId) {
-                this.session = session;
-                this.isFavorite = this.userProvider.hasFavorite(
-                  this.session.name
-                );
-                break;
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-  ionViewDidEnter() {
-    this.defaultHref = `/app/tabs/schedule`;
+
+  changeDate(qwe) {
+    console.log(qwe);
   }
 }

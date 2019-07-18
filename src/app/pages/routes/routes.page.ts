@@ -28,15 +28,14 @@ export class RoutesPage implements OnInit {
   }
 
   async submit() {
-    console.log(this.routesForm);
-    const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.routesForm}));
-    console.log(newRoute);
-
-    const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
-    console.log(allRoutes.data.listRoutess.items[0]);
-
-    const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: allRoutes.data.listRoutess.items[0]}));
-    console.log(deleteRoute);
+    // console.log(this.routesForm);
+    // const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.routesForm}));
+    // console.log(newRoute);
+    //
+    // const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
+    //
+    // const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: {id: allRoutes.data.listRoutess.items[0].id}}));
+    // console.log(deleteRoute);
   }
 
 }
