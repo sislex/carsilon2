@@ -13,6 +13,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import {AmplifyService} from 'aws-amplify-angular';
 import {AuthService} from './services/auth';
+import {MapComponent} from './components/map/map.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,10 @@ import {AuthService} from './services/auth';
       enabled: environment.production
     })
   ],
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    MapComponent
+  ],
   providers: [InAppBrowser, SplashScreen, StatusBar, AmplifyService, AuthService],
   bootstrap: [AppComponent]
 })

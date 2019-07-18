@@ -1,50 +1,69 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {Component, ElementRef, ViewChild, AfterViewInit, OnInit} from '@angular/core';
 import { ConferenceData } from '../../providers/conference-data';
 import { Platform } from '@ionic/angular';
+import {MapService} from '../../services/map.service';
+import ymaps from 'ymaps';
 
 @Component({
   selector: 'page-map',
   templateUrl: 'map.html',
   styleUrls: ['./map.scss']
 })
-export class MapPage implements AfterViewInit {
+export class MapPage implements AfterViewInit, OnInit {
   @ViewChild('mapCanvas') mapElement: ElementRef;
+  private isLoading: boolean = true;
 
-  constructor(public confData: ConferenceData, public platform: Platform) {}
+  constructor(public confData: ConferenceData, public platform: Platform, public mapService: MapService) {}
 
-  async ngAfterViewInit() {
-    const googleMaps = await getGoogleMaps(
-      'AIzaSyB8pf6ZdFQj5qw7rc_HSGrhUwQKfIe9ICw'
-    );
-    this.confData.getMap().subscribe((mapData: any) => {
-      const mapEle = this.mapElement.nativeElement;
-
-      const map = new googleMaps.Map(mapEle, {
-        center: mapData.find((d: any) => d.center),
-        zoom: 16
+ ngOnInit() {
+    // this.mapService.initializeMap()
+    ymaps.load(this.mapService.URL).then((maps) => {
+      this.mapService.mapsModule = maps;
+      this.mapService.map = new this.mapService.mapsModule.Map('map', {
+        center: this.mapService.officeCoordinates,
+        zoom: 15 // from 0 to 19
       });
-
-      mapData.forEach((markerData: any) => {
-        const infoWindow = new googleMaps.InfoWindow({
-          content: `<h5>${markerData.name}</h5>`
-        });
-
-        const marker = new googleMaps.Marker({
-          position: markerData,
-          map,
-          title: markerData.name
-        });
-
-        marker.addListener('click', () => {
-          infoWindow.open(map, marker);
-        });
-      });
-
-      googleMaps.event.addListenerOnce(map, 'idle', () => {
-        mapEle.classList.add('show-map');
-      });
+      this.isLoading = false;
+      this.mapService.addPoint(this.mapService.officeCoordinates, 'Office', 'Tolstogo 10');
+      this.mapService.addSearhcControl(() => {
+        console.log('zhopa')
+      })
+      // this.addPoint(this.officeCoordinates, 'Office', 'Tolstogo 10');
     });
+    // const googleMaps = await getGoogleMaps(
+    //   'AIzaSyB8pf6ZdFQj5qw7rc_HSGrhUwQKfIe9ICw'
+    // );
+    // this.confData.getMap().subscribe((mapData: any) => {
+    //   const mapEle = this.mapElement.nativeElement;
+    //
+    //   const map = new googleMaps.Map(mapEle, {
+    //     center: mapData.find((d: any) => d.center),
+    //     zoom: 16
+    //   });
+    //
+    //   mapData.forEach((markerData: any) => {
+    //     const infoWindow = new googleMaps.InfoWindow({
+    //       content: `<h5>${markerData.name}</h5>`
+    //     });
+    //
+    //     const marker = new googleMaps.Marker({
+    //       position: markerData,
+    //       map,
+    //       title: markerData.name
+    //     });
+    //
+    //     marker.addListener('click', () => {
+    //       infoWindow.open(map, marker);
+    //     });
+    //   });
+    //
+    //   googleMaps.event.addListenerOnce(map, 'idle', () => {
+    //     mapEle.classList.add('show-map');
+    //   });
+    // });
   }
+
+  ngAfterViewInit() {}
 }
 
 function getGoogleMaps(apiKey: string): Promise<any> {
