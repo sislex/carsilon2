@@ -77,7 +77,7 @@
   /* Ionic Theme */
   
   /** primary **/
-  --ion-color-primary: #19d2dd;
+  --ion-color-primary: linear-gradient(to bottom, #17a2b8 0%, #18e7d3 100%);
   --ion-color-primary-rgb: 26,191,201;
   --ion-color-primary-contrast: #fff;
   --ion-color-primary-contrast-rgb: 255,255,255;
@@ -85,8 +85,8 @@
   --ion-color-primary-tint: #000000;
 
   /** secondary **/
-  --ion-color-secondary: #18e7d3;
-  --ion-color-secondary-rgb: 24,212,194;
+  --ion-color-secondary: linear-gradient(to left, #17a2b8 0%, #18e7d3 100%);
+  --ion-color-secondary-rgb: 24,231,211;
   --ion-color-secondary-contrast: #fff;
   --ion-color-secondary-contrast-rgb: 255,255,255;
   --ion-color-secondary-shade: #18e7d3ad;
