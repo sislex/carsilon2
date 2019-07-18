@@ -16,7 +16,8 @@ export class SearchFieldComponent implements OnInit {
       offset: [10, 10]
     });
 
-    suggestView.events.add('select', () => {
+    suggestView.events.add('change', () => {
+      debugger
       const activeIndex = suggestView.state.get('activeIndex');
       const resultItem = suggestView.state.get('items')[activeIndex];
       this.result.emit({

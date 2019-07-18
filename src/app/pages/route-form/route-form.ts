@@ -21,6 +21,7 @@ export class RouteFormPage {
   };
 
   async addRoute() {
+    console.log(new Date(this.drive.timeStart).getTime());
     console.log(this.myDate);
     console.log(this.drive);
     const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.drive}));

@@ -10,20 +10,13 @@ import * as subscriptions from '../../../graphql/subscriptions';
   styleUrls: ['./routes.page.scss'],
 })
 export class RoutesPage implements OnInit {
-
-  public routesForm = {
-    username: 'username',
-    userData: 'userData',
-    timeStart: 'timeStart',
-    addressStart: 'addressStart',
-    addressFinish: 'addressFinish',
-    coordinatesStart: 'coordinatesStart',
-    coordinatesFinish: 'coordinatesFinish',
-    description: 'description',
-  };
+  public myRoutes;
   constructor() { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
+    this.myRoutes = allRoutes.data.listRoutess.items
+    console.log(this.myRoutes);
     this.submit();
   }
 
