@@ -36,3 +36,26 @@ export const listRoutess = `query ListRoutess(
   }
 }
 `;
+export const getFeedback = `query GetFeedback($id: ID!) {
+  getFeedback(id: $id) {
+    id
+    email
+    text
+  }
+}
+`;
+export const listFeedbacks = `query ListFeedbacks(
+  $filter: ModelFeedbackFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFeedbacks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      email
+      text
+    }
+    nextToken
+  }
+}
+`;

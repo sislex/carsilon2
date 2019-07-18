@@ -28,9 +28,9 @@ export class RoutesPage implements OnInit {
   }
 
   async submit() {
-    // console.log(this.routesForm);
-    // const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.routesForm}));
-    // console.log(newRoute);
+    console.log(this.routesForm);
+    const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.routesForm}));
+    console.log(newRoute);
 
     const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
     console.log(allRoutes.data.listRoutess.items[0]);

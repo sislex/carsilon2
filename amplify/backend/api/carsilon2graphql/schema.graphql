@@ -9,3 +9,9 @@ type Routes @model {
   coordinatesFinish: String!
   description: String
 }
+
+type Feedback @model {
+  id: ID!
+  email: String!
+  text: String!
+}
