@@ -4,7 +4,6 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../../graphql/queries';
 import * as mutations from '../../../graphql/mutations';
 import * as subscriptions from '../../../graphql/subscriptions';
-import {MapService} from '../../services/map.service';
 @Component({
   selector: 'routes',
   templateUrl: './routes.page.html',
@@ -12,12 +11,11 @@ import {MapService} from '../../services/map.service';
 })
 export class RoutesPage implements OnInit {
   public myRoutes;
-  constructor(public mapService: MapService) { }
+  constructor() { }
 
   async ngOnInit() {
     const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
-    this.myRoutes = allRoutes.data.listRoutess.items
-    this.mapService.allRoutes = this.myRoutes;
+    this.myRoutes = allRoutes.data.listRoutess.items;
     console.log(this.myRoutes);
     this.submit();
   }
@@ -31,6 +29,14 @@ export class RoutesPage implements OnInit {
     //
     // const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: {id: allRoutes.data.listRoutess.items[0].id}}));
     // console.log(deleteRoute);
+  }
+
+  async remove(route) {
+    const obj = {id: route.id};
+    const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: obj}));
+    const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
+    this.myRoutes = allRoutes.data.listRoutess.items;
+    console.log(this.myRoutes);
   }
 
 }

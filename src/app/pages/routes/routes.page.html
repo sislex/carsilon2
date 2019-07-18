@@ -37,7 +37,7 @@
     <ion-item-group class="old">
       <ion-item-divider sticky>
         <ion-label>
-          Old routes (2)
+          Old routes ({{myRoutes?myRoutes.length:''}})
         </ion-label>
       </ion-item-divider>
 
@@ -54,7 +54,7 @@
           <ion-item-option color="favorite">
             Repeat
           </ion-item-option>
-          <ion-item-option color="danger">
+          <ion-item-option color="danger" (click)="remove(route)">
             Remove
           </ion-item-option>
         </ion-item-options>

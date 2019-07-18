@@ -11,7 +11,7 @@ export class RouteFormPage {
 
   myDate;
   public drive = {
-    addressStart: '',
+    addressStart: 'Belarus, Minsk, vulica Talstoha',
     addressFinish: '',
     coordinatesStart: 'coordinatesStart',
     coordinatesFinish: 'coordinatesFinish',
@@ -30,5 +30,9 @@ export class RouteFormPage {
 
   changeDate(qwe) {
     console.log(qwe);
+  }
+
+  setAddress($event) {
+    this.drive.addressFinish = $event.value;
   }
 }
