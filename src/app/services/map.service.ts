@@ -1,5 +1,9 @@
 import {Injectable} from '@angular/core';
 import ymaps from 'ymaps';
+import * as queries from '../../graphql/queries';
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import { getSortedRoutes } from '../helpers/distance.js';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +17,34 @@ export class MapService {
 
   constructor() {
 
+  }
+
+  getFilteredRoutes(to) {
+    this.routesCollection = getSortedRoutes(this.routesCollection, to);
+  }
+
+  async displayRoutes(routesCollection) {
+    this.routesCollection = await Promise.all(routesCollection.map(async (item) => {
+        const {route} = await this.generateRoute(undefined, item.addressFinish);
+        const segments = route.getPaths()[0].getSegments();
+        let allPoints = [];
+        segments.forEach((segment) => {
+          allPoints = allPoints.concat(segment.geometry.getCoordinates());
+        });
+
+        return new Route(null, null, allPoints);
+      }));
+    setTimeout(() => {
+      this.getFilteredRoutes(this.myDestination);
+      this.displayColorfulRoutesCollection([this.routesCollection[0]]);
+    }, 2000);
+  }
+
+  async fetchRoutes() {
+    const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
+    // this.myRoutes = allRoutes.data.listRoutess.items
+    this.allRoutes = allRoutes.data.listRoutess.items;
+    this.displayRoutes(this.allRoutes);
   }
 
   initializeMap() {

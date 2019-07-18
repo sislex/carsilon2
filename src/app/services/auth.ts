@@ -39,7 +39,7 @@ export class AuthService implements CanActivate {
             attributes: { email: authState.user.attributes.email }
           });
         });
-        this.router.navigateByUrl('/app/tabs/map');
+        this.router.navigateByUrl('/app/tabs/map', {to});
       } else {
         this.user = null;
       }
