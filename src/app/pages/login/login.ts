@@ -41,6 +41,14 @@ export class LoginPage {
         displayOrder: 4,
         type: 'string'
       },
+      {
+        label: 'FIO',
+        key: 'fullname',
+        required: true,
+        displayOrder: 5,
+        type: 'string',
+        custom: true
+      },
     ]
   };
 }

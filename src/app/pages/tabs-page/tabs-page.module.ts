@@ -13,6 +13,7 @@ import { SpeakerDetailModule } from '../speaker-detail/speaker-detail.module';
 import { SpeakerListModule } from '../speaker-list/speaker-list.module';
 import { RoutesPageModule } from '../routes/routes.module';
 import {RouteFormModule} from '../route-form/route-form.module';
+import {DestinationFormPageModule} from '../destination-form/destination-form.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {RouteFormModule} from '../route-form/route-form.module';
     RouteFormModule,
     SpeakerDetailModule,
     SpeakerListModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
+    DestinationFormPageModule
   ],
   declarations: [
     TabsPage,
