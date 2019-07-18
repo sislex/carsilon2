@@ -10,20 +10,22 @@
 <ion-content>
   <ion-list>
 
+    <div class="ion-padding">
     <ion-item>
-      <ion-label position="stacked">From <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required type="text" [(ngModel)]="drive.addressStart" name="addressStart"></ion-input>
+      <ion-input required type="text" placeholder="From" [(ngModel)]="drive.addressStart" name="addressStart"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">To <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required type="text" [(ngModel)]="drive.addressFinish" name="addressFinish"></ion-input>
+      <ion-input required type="text" placeholder="To" [(ngModel)]="drive.addressFinish" name="addressFinish"></ion-input>
     </ion-item>
+    </div>
 
+    <div class="ion-padding">
     <ion-item>
       <ion-label>Start Time</ion-label>
       <ion-datetime (ngModelChange)="changeDate($event)" display-format="h:mm A" picker-format="h:mm A" [value]="drive.timeStart" [(ngModel)]="drive.timeStart" name="myDate"></ion-datetime>
     </ion-item>
+    </div>
 
   </ion-list>
 
