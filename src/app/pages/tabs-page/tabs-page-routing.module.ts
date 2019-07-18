@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs-page';
 import { SchedulePage } from '../schedule/schedule';
 import {RoutesPage} from '../routes/routes.page';
+import {DestinationFormPage} from '../destination-form/destination-form.page';
 
 
 const routes: Routes = [
@@ -10,6 +11,15 @@ const routes: Routes = [
     path: 'tabs',
     component: TabsPage,
     children: [
+      {
+        path: 'destination',
+        children: [
+          {
+            path: '',
+            component: DestinationFormPage,
+          },
+        ]
+      },
       {
         path: 'routes',
         children: [

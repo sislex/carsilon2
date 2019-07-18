@@ -11,13 +11,13 @@ export class AuthService implements CanActivate {
   user = null;
 
   constructor(public router: Router, public events: Events, public amplifyService: AmplifyService) {
-    this.events.subscribe('data:AuthState', async (data) => {
-      if (data.loggedIn) {
-        this.signedIn = true;
-      } else {
-        this.signedIn = false;
-      }
-    });
+    // this.events.subscribe('data:AuthState', async (data) => {
+    //   if (data.loggedIn) {
+    //     this.signedIn = true;
+    //   } else {
+    //     this.signedIn = false;
+    //   }
+    // });
     this.authSubscription();
   }
 

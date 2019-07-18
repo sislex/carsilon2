@@ -56,24 +56,24 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.checkLoginStatus();
-    this.listenForLoginEvents();
-
-    this.swUpdate.available.subscribe(async res => {
-      const toast = await this.toastCtrl.create({
-        message: 'Update available!',
-        showCloseButton: true,
-        position: 'bottom',
-        closeButtonText: `Reload`
-      });
-
-      await toast.present();
-
-      toast
-        .onDidDismiss()
-        .then(() => this.swUpdate.activateUpdate())
-        .then(() => window.location.reload());
-    });
+    // this.checkLoginStatus();
+    // this.listenForLoginEvents();
+    //
+    // this.swUpdate.available.subscribe(async res => {
+    //   const toast = await this.toastCtrl.create({
+    //     message: 'Update available!',
+    //     showCloseButton: true,
+    //     position: 'bottom',
+    //     closeButtonText: `Reload`
+    //   });
+    //
+    //   await toast.present();
+    //
+    //   toast
+    //     .onDidDismiss()
+    //     .then(() => this.swUpdate.activateUpdate())
+    //     .then(() => window.location.reload());
+    // });
   }
 
   initializeApp() {
