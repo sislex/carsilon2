@@ -43,3 +43,27 @@ export const deleteRoutes = `mutation DeleteRoutes($input: DeleteRoutesInput!) {
   }
 }
 `;
+export const createFeedback = `mutation CreateFeedback($input: CreateFeedbackInput!) {
+  createFeedback(input: $input) {
+    id
+    email
+    text
+  }
+}
+`;
+export const updateFeedback = `mutation UpdateFeedback($input: UpdateFeedbackInput!) {
+  updateFeedback(input: $input) {
+    id
+    email
+    text
+  }
+}
+`;
+export const deleteFeedback = `mutation DeleteFeedback($input: DeleteFeedbackInput!) {
+  deleteFeedback(input: $input) {
+    id
+    email
+    text
+  }
+}
+`;

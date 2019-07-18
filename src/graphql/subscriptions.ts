@@ -43,3 +43,27 @@ export const onDeleteRoutes = `subscription OnDeleteRoutes {
   }
 }
 `;
+export const onCreateFeedback = `subscription OnCreateFeedback {
+  onCreateFeedback {
+    id
+    email
+    text
+  }
+}
+`;
+export const onUpdateFeedback = `subscription OnUpdateFeedback {
+  onUpdateFeedback {
+    id
+    email
+    text
+  }
+}
+`;
+export const onDeleteFeedback = `subscription OnDeleteFeedback {
+  onDeleteFeedback {
+    id
+    email
+    text
+  }
+}
+`;
