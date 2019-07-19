@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button color='primary' (click)="startApp()" [hidden]="!showSkip">Skip</ion-button>
+      <ion-button color='primary' (click)="startApp()">Skip</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -39,8 +39,12 @@
 
     <ion-slide>
       <img src="assets/img/ica-slidebox-img-4.png" class="slide-image" />
-      <h2 class="slide-title">Ready to Play?</h2>
-      <ion-button fill="clear" (click)="startApp()">
+      <h2 class="slide-title">Ready to Enjoy?</h2>
+      <!--<ion-button fill="clear" routerLink="/app/tabs/map" routerDirection="root" *ngIf="authService.user">
+        Continue
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>-->
+      <ion-button fill="clear" routerLink="/app/tabs/map" routerDirection="root">
         Continue
         <ion-icon slot="end" name="arrow-forward"></ion-icon>
       </ion-button>
