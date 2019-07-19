@@ -35,7 +35,7 @@ export class MapPage implements AfterViewInit, OnInit {
         zoom: 12 // from 0 to 19
       });
       this.isLoading = false;
-      this.mapService.addPoint(this.mapService.officeCoordinates, null,'Office', 'Tolstogo 10');
+      this.mapService.addPoint(this.mapService.officeCoordinates, null,null, 'Tolstogo 10');
       this.mapService.addSearhcControl((data) => {
         this.handleSearchResult(data);
       });

@@ -38,6 +38,6 @@ export class RouteFormPage {
 
   setAddress($event) {
     this.drive.addressFinish = $event.value;
-    this.mapService.myDestination = this.drive.addressFinish;
+    this.mapService.myDestination = null;
   }
 }

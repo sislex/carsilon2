@@ -37,7 +37,7 @@ export class MapService {
   public destinations: any = [];
   public routesCollection: any = [];
   public allRoutes: any = [];
-  public myDestination: any = [53.910092, 27.519727];
+  public myDestination: any = null;
 
   public colors = ['#4287f5', '#1518bd', '#ed152b', '#16b84f', '#7e29b3', '#754805',
     '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -58,8 +58,15 @@ export class MapService {
     this.routesCollection = getSortedRoutes(this.routesCollection, to);
   }
 
+  getCoordinates(coordinates) {
+    if (coordinates) {
+
+    }
+  }
+
   async displayRoutes(routesCollection) {
-    this.routesCollection = await Promise.all(routesCollection.map(async (item) => {
+    if (routesCollection && routesCollection.length) {
+      this.routesCollection = await Promise.all(routesCollection.map(async (item) => {
         const {route} = await this.generateRoute(undefined, item.addressFinish);
         const segments = route.getPaths()[0].getSegments();
         let allPoints = [];
@@ -69,13 +76,41 @@ export class MapService {
 
         return new Route(null, null, allPoints);
       }));
+    }
 
-      this.clearMap();
-      this.getFilteredRoutes(this.myDestination);
-      // this.displayColorfulRoutesCollection([this.routesCollection[0]]);
-      this.displayColorfulRoutesCollection(this.routesCollection);
-      debugger
+    this.clearMap();
+    if (this.myDestination) {
       this.addPoint(this.myDestination);
+    }
+    // this.displayColorfulRoutesCollection([this.routesCollection[0]]);
+    if (this.routesCollection && this.routesCollection.length) {
+      if (this.myDestination) {
+        if (typeof this.myDestination === 'string') {
+          this.myDestination = await this.mapsModule.geocode(this.myDestination);
+        }
+        this.getFilteredRoutes(this.myDestination);
+      }
+      this.displayColorfulRoutesCollection(this.routesCollection);
+    }
+    debugger
+
+  }
+
+  addPlacemark() {
+    const placemark = new ymaps.Placemark(myMap.getCenter(), {
+      balloonContentBody: [
+        '<address>',
+        '<strong>Офис Яндекса в Москве</strong>',
+        '<br/>',
+        'Адрес: 119021, Москва, ул. Льва Толстого, 16',
+        '<br/>',
+        'Подробнее: <a href="https://company.yandex.ru/">https://company.yandex.ru</a>',
+        '</address>'
+      ].join('')
+    }, {
+      preset: 'islands#redDotIcon'
+    });
+
   }
 
   async fetchRoutes() {
@@ -87,6 +122,7 @@ export class MapService {
 
   clearMap() {
     this.map.geoObjects.removeAll();
+    this.addPoint(this.officeCoordinates);
   }
 
   generateRoute(from = this.officeCoordinates, to) {
@@ -127,7 +163,6 @@ export class MapService {
   }
 
   displayColorfulRoutesCollection(routesCollection) {
-    debugger
     routesCollection.forEach((route, index) => {
       // TODO: what if we are run out of colors
       const color = this.colors[index];
@@ -176,9 +211,9 @@ export class MapService {
       }
     }, {
       // Иконка метки будет растягиваться под размер ее содержимого.
-      preset: 'islands#blackStretchyIcon',
-      draggable: true,
-      fillColor: color,
+      // preset: 'islands#blackStretchyIcon',
+      // draggable: true,
+      // fillColor: color,
     });
 
     this.map.geoObjects.add(point);
