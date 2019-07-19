@@ -96,6 +96,7 @@ export class MapPage implements AfterViewInit, OnInit {
   }
 
   changeDate($event) {
+    this.filteredTime = $event;
     console.log(this.filteredTime);
     console.log(new Date(this.filteredTime).getTime());
   }
