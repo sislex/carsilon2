@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {API, graphqlOperation} from 'aws-amplify';
 import * as mutations from '../../../graphql/mutations';
 import {MapService} from '../../services/map.service';
+import {AuthService} from '../../services/auth';
 
 @Component({
   selector: 'page-session-detail',
@@ -9,7 +10,7 @@ import {MapService} from '../../services/map.service';
   templateUrl: 'route-form.html'
 })
 export class RouteFormPage {
-  constructor(public mapService: MapService) {
+  constructor(public mapService: MapService, public authService: AuthService) {
 
   }
 

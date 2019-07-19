@@ -18,6 +18,9 @@ export class MapPage implements AfterViewInit, OnInit {
   public routesCollection: any[] = [];
   public stringDestination: string = 'Беларусь, Минск, улица Руссиянова, 5/1 ';
 
+  public filteredTime = null;
+  public hour = null;
+
   public destinations = [
     [53.880931, 27.537810],
     [53.910092, 27.519727],
@@ -47,7 +50,7 @@ export class MapPage implements AfterViewInit, OnInit {
 
   handleSearchResult(event) {
     const searchState = event.get('target').state;
-    debugger;
+    // debugger;
   }
 
   clearMap() {
@@ -90,5 +93,10 @@ export class MapPage implements AfterViewInit, OnInit {
 
   saveCurrentRoute() {
     this.mapService.addRouteToCollection(this.currentRoute, this.mapService.routesCollection);
+  }
+
+  changeDate($event) {
+    console.log(this.filteredTime);
+    console.log(new Date(this.filteredTime).getTime());
   }
 }
