@@ -134,8 +134,6 @@ export class MapService {
     const polyline = new this.mapsModule.Polyline(route.allPoints, {
         balloonContent: info,
         balloonContentHeader: this.getBalloonHeader(),
-        balloonContentBody: this.getBalloonContent(),
-        balloonContentFooter: this.getBalloonFooter()
       }, {
         strokeWidth: 6,
         strokeOpacity: 0.8,
@@ -150,7 +148,7 @@ export class MapService {
       // TODO: what if we are run out of colors
       const color = this.colors[index];
       let info;
-      this.displayRouteByPoints(route, color, info || 'zhopa');
+      this.displayRouteByPoints(route, color, info);
     });
   }
 
@@ -223,47 +221,6 @@ export class MapService {
     this.map.geoObjects.add(point);
   }
 
-  getBalloonContent() {
-    const routeInfo = {
-      name:'Andrew Visokih',
-      photo:"https://www.w3schools.com/html/pic_trulli.jpg",
-      destination:'vulica Husoŭskaha 64-61, Minsk, Republic of Belarus',
-      departure:'11:40 PM',
-      phone:'+37529 999 99 99'
-    };
-
-    return `<style>
-        .info{
-          position:absolute;
-          left:20px; 
-          top:220px;
-          right:20px;
-          bottom:50px;
-          //background-color: grey;
-          text-align: left;
-          overflow: hidden;
-        }
-        .info div {
-          /*//height: 30px;*/
-          font-size:18px;
-          line-height: 25px;
-          color: black;
-        }
-        .call-btn {
-          //background: red;
-          position:absolute;
-          
-          top:350px;
-          right:10px;
-          bottom:10px;
-          left:10px; 
-        }
-</style>`+
-        '<div class="info" >' +
-        '<div><b>Destination:</b>' + routeInfo.destination+ '</div>' +
-        '<div><b>Departure:</b>' + routeInfo.departure+ '</div>';
-  }
-
   getBalloonHeader() {
     const routeInfo = {
       name:'Andrew Carowner',
@@ -282,10 +239,15 @@ export class MapService {
           justify-content: space-between;
         }
         
-        img {
+        .img {
           width: 80px;
           height: 80px;
           border-radius: 40px;
+        }
+        
+        .img1 {
+        width: 20px;
+        height: 20px;
         }
         
         .name {
@@ -294,60 +256,32 @@ export class MapService {
           font-size: 17px;
           width: 50%;
           line-height: 23px;
+        }
+        
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 50px;
+            margin-top: 20px;
+        }
+        
+        .phone {
+            opacity: 0.6;
+    font-weight: 100;
         }
         
       </style>
       <div class="header-container">
-        <img src="${routeInfo.photo}">
+        <img class="img" src="${routeInfo.photo}">
         <div class="name">${routeInfo.name}</div>
+      </div >
+      <div class="footer">
+        <img class="img1" src="https://cs6.pikabu.ru/images/previews_comm/2015-01_5/14222063051894.png">
+          <div class="phone">${routeInfo.phone}</div>
+      
       </div>
+            
     `;
   }
-
-  getBalloonFooter() {
-    const routeInfo = {
-      name:'Andrew Visokih',
-      photo:"https://www.w3schools.com/html/pic_trulli.jpg",
-      destination:'vulica Husoŭskaha 64-61, Minsk, Republic of Belarus',
-      departure:'11:40 PM',
-      phone:'+37529 999 99 99'
-    };
-
-    return `
-      <style>
-        .footer-container {
-          width: 100%;
-          height: 80px;
-          display: flex;
-        }
-        
-        img {
-          width: 80px;
-          height: 80px;
-          border-radius: 40px;
-        }
-        
-        .name {
-          align-self: center;
-          flex-wrap: wrap;
-          font-size: 17px;
-          width: 50%;
-          line-height: 23px;
-        }
-        
-        .call-btn button{
-          position: static;
-          width:100%;
-          height:100%;
-          border-radius: 2px;
-        }
-        
-      </style>
-      <div class="footer-container">
-        <div><b>Phone:</b>${routeInfo.phone}</div>
-        <div class="call-btn"><button onclick="doCall()">Call Driver</button></div>
-      </div>
-    `;
   }
-
-}
