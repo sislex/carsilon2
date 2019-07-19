@@ -59,23 +59,23 @@ export class MapService {
   }
 
   async displayRoutes(routesCollection) {
-    this.routesCollection = await Promise.all(routesCollection.map(async (item) => {
-        const {route} = await this.generateRoute(undefined, item.addressFinish);
-        const segments = route.getPaths()[0].getSegments();
-        let allPoints = [];
-        segments.forEach((segment) => {
-          allPoints = allPoints.concat(segment.geometry.getCoordinates());
-        });
-
-        return new Route(null, null, allPoints);
-      }));
-
-      this.clearMap();
-      this.getFilteredRoutes(this.myDestination);
-      // this.displayColorfulRoutesCollection([this.routesCollection[0]]);
-      this.displayColorfulRoutesCollection(this.routesCollection);
-      debugger
-      this.addPoint(this.myDestination);
+    // this.routesCollection = await Promise.all(routesCollection.map(async (item) => {
+    //     const {route}: any = await this.generateRoute(undefined, item.addressFinish);
+    //     const segments = route.getPaths()[0].getSegments();
+    //     let allPoints = [];
+    //     segments.forEach((segment) => {
+    //       allPoints = allPoints.concat(segment.geometry.getCoordinates());
+    //     });
+    //
+    //     return new Route(null, null, allPoints);
+    //   }));
+    //
+    //   this.clearMap();
+    //   this.getFilteredRoutes(this.myDestination);
+    //   // this.displayColorfulRoutesCollection([this.routesCollection[0]]);
+    //   this.displayColorfulRoutesCollection(this.routesCollection);
+    //   debugger
+    //   this.addPoint(this.myDestination);
   }
 
   async fetchRoutes() {

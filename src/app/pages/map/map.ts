@@ -62,10 +62,10 @@ export class MapPage implements AfterViewInit, OnInit {
   }
 
   async fillTheRoutesCollection() {
-    this.destinations.forEach(async (destination) => {
-      const {route} = await this.getRoute(destination);
-      this.addRouteToCollection(route);
-    });
+    // this.destinations.forEach(async (destination) => {
+    //   const {route} = await this.getRoute(destination);
+    //   this.addRouteToCollection(route);
+    // });
   }
 
   getRoute(destination: any = this.stringDestination) {
