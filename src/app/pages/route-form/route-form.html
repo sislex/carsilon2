@@ -24,24 +24,17 @@
       <ion-item>
         <search-field (result)="setAddress($event)"></search-field>
       </ion-item>
+    </div>
     <div class="ion-padding">
-    <ion-item>
-      <ion-label>Departure:</ion-label>
-      <ion-datetime (ngModelChange)="changeDate($event)" display-format="H:mm" picker-format="H:mm" [value]="drive.timeStart" [(ngModel)]="drive.timeStart" name="myDate"></ion-datetime>
-    </ion-item>
     </div>
 
-  </ion-list>
 
   <div class="ion-padding">
     <ion-button expand="block" color="secondary" (click)="addRoute()" routerLink="/app/tabs/map">Add Route</ion-button>
-  </div>
-      <div class="ion-padding">
-        <ion-button expand="block" color="secondary" (click)="addRoute()">Add Route</ion-button>
-      </div>
     </div>
-
   </ion-list>
+
+
 
 
 </ion-content>
