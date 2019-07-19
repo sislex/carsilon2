@@ -19,7 +19,7 @@ export class MapPage implements AfterViewInit, OnInit {
   public stringDestination: string = 'Беларусь, Минск, улица Руссиянова, 5/1 ';
 
   public filteredTime = null;
-  public hour = null;
+  public hours = null;
 
   public destinations = [
     [53.880931, 27.537810],
@@ -97,7 +97,8 @@ export class MapPage implements AfterViewInit, OnInit {
 
   changeDate($event) {
     this.filteredTime = $event;
+    this.hours = new Date(this.filteredTime).getHours();
     console.log(this.filteredTime);
-    console.log(new Date(this.filteredTime).getTime());
+    console.log(new Date(this.filteredTime).getHours());
   }
 }

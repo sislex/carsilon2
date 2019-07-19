@@ -4,6 +4,7 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../../graphql/queries';
 import * as mutations from '../../../graphql/mutations';
 import * as subscriptions from '../../../graphql/subscriptions';
+import {RoutesService} from '../../services/routes.service';
 @Component({
   selector: 'routes',
   templateUrl: './routes.page.html',
@@ -11,9 +12,10 @@ import * as subscriptions from '../../../graphql/subscriptions';
 })
 export class RoutesPage implements OnInit {
   public myRoutes;
-  constructor() { }
+  constructor( public routesService: RoutesService) { }
 
   async ngOnInit() {
+    this.routesService.updateRoutes();
     const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
     this.myRoutes = allRoutes.data.listRoutess.items;
     console.log(this.myRoutes);

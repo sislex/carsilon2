@@ -3,6 +3,7 @@ import {API, graphqlOperation} from 'aws-amplify';
 import * as mutations from '../../../graphql/mutations';
 import {MapService} from '../../services/map.service';
 import {AuthService} from '../../services/auth';
+import {RoutesService} from '../../services/routes.service';
 
 @Component({
   selector: 'page-session-detail',
@@ -10,7 +11,7 @@ import {AuthService} from '../../services/auth';
   templateUrl: 'route-form.html'
 })
 export class RouteFormPage {
-  constructor(public mapService: MapService, public authService: AuthService) {
+  constructor(public mapService: MapService, public authService: AuthService, public routesService: RoutesService) {
 
   }
 
@@ -27,9 +28,8 @@ export class RouteFormPage {
 
   async addRoute() {
     console.log(new Date(this.drive.timeStart).getTime());
-    console.log(this.myDate);
-    console.log(this.drive);
-    const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.drive}));
+
+    const newRoute = await this.routesService.addRoute(this.drive);
     console.log(newRoute);
   }
 
