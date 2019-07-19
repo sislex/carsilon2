@@ -27,10 +27,13 @@ export class RouteFormPage {
   };
 
   async addRoute() {
+    this.drive.timeStart = (new Date()).toString();
     console.log(new Date(this.drive.timeStart).getTime());
 
-    const newRoute = await this.routesService.addRoute(this.drive);
-    console.log(newRoute);
+    const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.drive}));
+    const routes = await this.routesService.updateRoutes();
+
+    console.log(routes);
   }
 
   changeDate(qwe) {

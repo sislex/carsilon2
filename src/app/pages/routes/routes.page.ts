@@ -11,16 +11,17 @@ import {RoutesService} from '../../services/routes.service';
   styleUrls: ['./routes.page.scss'],
 })
 export class RoutesPage implements OnInit {
-  public myRoutes;
   constructor( public routesService: RoutesService) { }
 
   async ngOnInit() {
-    this.routesService.updateRoutes();
-    const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
-    this.myRoutes = allRoutes.data.listRoutess.items;
-    console.log(this.myRoutes);
+    await this.routesService.updateRoutes();
+
+    console.log(new Date());
     // this.submit();
+    // console.log(this.filterByTime(this.routesService.routes));
   }
+
+
 
   // async submit() {
   //   console.log(this.routesForm);
@@ -35,11 +36,27 @@ export class RoutesPage implements OnInit {
   // }
 
   async remove(route) {
-    const obj = {id: route.id};
-    const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: obj}));
-    const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
-    this.myRoutes = allRoutes.data.listRoutess.items;
-    console.log(this.myRoutes);
+    // const obj = {id: route.id};
+    // const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: obj}));
+    // const allRoutes = await API.graphql(graphqlOperation(queries.listRoutess));
+    // this.myRoutes = allRoutes.data.listRoutess.items;
+    // console.log(this.myRoutes);
+
+    this.routesService.remove(route.id);
+  }
+
+  formatDate(time) {
+    console.log(time);
+    const date = new Date(time);
+    const options = {
+      hour12: false,
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+
+    return date.toLocaleString('en-US', options);
   }
 
 }

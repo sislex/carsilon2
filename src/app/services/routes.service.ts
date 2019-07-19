@@ -19,13 +19,31 @@ export class RoutesService {
   }
 
   async updateRoutes() {
-    const routes = await API.graphql(graphqlOperation(queries.listRoutess));
-    this.routes = routes.data.listRoutess.items;
+    let routes = await API.graphql(graphqlOperation(queries.listRoutess));
+    routes = routes.data.listRoutess.items;
+    routes.filter((a, b) => {
+      if (new Date(a.timeStart) > new Date(b.timeStart)) {
+        return 1;
+      }
+
+      if (new Date(a.timeStart) > new Date(b.timeStart)) {
+        return -1;
+      }
+
+      return 0;
+    });
+    this.routes = routes;
     return this.routes;
   }
 
   async addRoute(obj) {
    return  await API.graphql(graphqlOperation(mutations.createRoutes, {input: obj}));
+  }
+
+  async remove(routeId) {
+    const obj = {id: routeId};
+    const deleteRoute = await API.graphql(graphqlOperation(mutations.deleteRoutes, {input: obj}));
+    await this.updateRoutes();
   }
 
 }

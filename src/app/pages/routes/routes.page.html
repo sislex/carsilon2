@@ -40,7 +40,7 @@
     <ion-item-group class="old">
       <ion-item-divider sticky>
         <ion-label>
-          Old routes ({{myRoutes?myRoutes.length:''}})
+          Old routes ({{routesService.routes?routesService.routes.length:''}})
         </ion-label>
       </ion-item-divider>
 
@@ -49,7 +49,7 @@
           <ion-label>
             <h3>{{route.addressFinish}}</h3>
             <p>
-              {{route.timeStart}}
+              {{formatDate(route.timeStart)}}
             </p>
           </ion-label>
         </ion-item>
