@@ -1,72 +1,104 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {Component, ElementRef, ViewChild, AfterViewInit, OnInit} from '@angular/core';
 import { ConferenceData } from '../../providers/conference-data';
 import { Platform } from '@ionic/angular';
+import {MapService, Route} from '../../services/map.service';
+import ymaps from 'ymaps';
 
 @Component({
   selector: 'page-map',
   templateUrl: 'map.html',
   styleUrls: ['./map.scss']
 })
-export class MapPage implements AfterViewInit {
+export class MapPage implements AfterViewInit, OnInit {
   @ViewChild('mapCanvas') mapElement: ElementRef;
+  private isLoading: boolean = true;
+  public currentRoute: any = null;
+  public myHomeCoordinates: any = [53.880931, 27.537810];
+  public anastasiaHome = [53.910092, 27.519727];
+  public routesCollection: any[] = [];
+  public stringDestination: string = 'Беларусь, Минск, улица Руссиянова, 5/1 ';
 
-  constructor(public confData: ConferenceData, public platform: Platform) {}
+  public filteredTime = null;
+  public hours = null;
 
-  async ngAfterViewInit() {
-    const googleMaps = await getGoogleMaps(
-      'AIzaSyB8pf6ZdFQj5qw7rc_HSGrhUwQKfIe9ICw'
-    );
-    this.confData.getMap().subscribe((mapData: any) => {
-      const mapEle = this.mapElement.nativeElement;
+  public destinations = [
+    [53.880931, 27.537810],
+    [53.910092, 27.519727],
+    'Беларусь, Минск, улица Руссиянова, 5/1 '
+  ];
 
-      const map = new googleMaps.Map(mapEle, {
-        center: mapData.find((d: any) => d.center),
-        zoom: 16
+  constructor(public confData: ConferenceData, public platform: Platform, public mapService: MapService) {}
+
+  ngOnInit() {
+    // this.mapService.initializeMap()
+    ymaps.load(this.mapService.URL).then((maps) => {
+      this.mapService.mapsModule = maps;
+      this.mapService.map = new this.mapService.mapsModule.Map('map', {
+        center: this.mapService.officeCoordinates,
+        zoom: 12 // from 0 to 19
       });
-
-      mapData.forEach((markerData: any) => {
-        const infoWindow = new googleMaps.InfoWindow({
-          content: `<h5>${markerData.name}</h5>`
-        });
-
-        const marker = new googleMaps.Marker({
-          position: markerData,
-          map,
-          title: markerData.name
-        });
-
-        marker.addListener('click', () => {
-          infoWindow.open(map, marker);
-        });
+      this.isLoading = false;
+      this.mapService.addPoint(this.mapService.officeCoordinates, null,null, 'Tolstogo 10');
+      this.mapService.addSearhcControl((data) => {
+        this.handleSearchResult(data);
       });
-
-      googleMaps.event.addListenerOnce(map, 'idle', () => {
-        mapEle.classList.add('show-map');
-      });
+      this.fillTheRoutesCollection()
     });
   }
-}
 
-function getGoogleMaps(apiKey: string): Promise<any> {
-  const win = window as any;
-  const googleModule = win.google;
-  if (googleModule && googleModule.maps) {
-    return Promise.resolve(googleModule.maps);
+  ngAfterViewInit() {}
+
+  handleSearchResult(event) {
+    const searchState = event.get('target').state;
+    // debugger;
   }
 
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.31`;
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-    script.onload = () => {
-      const googleModule2 = win.google;
-      if (googleModule2 && googleModule2.maps) {
-        resolve(googleModule2.maps);
-      } else {
-        reject('google maps not available');
+  clearMap() {
+    this.mapService.clearMap();
+  }
+
+  displayRoutesCollection() {
+    this.mapService.displayColorfulRoutesCollection(this.routesCollection);
+  }
+
+  async fillTheRoutesCollection() {
+    // this.destinations.forEach(async (destination) => {
+    //   const {route} = await this.getRoute(destination);
+    //   this.addRouteToCollection(route);
+    // });
+  }
+
+  getRoute(destination: any = this.stringDestination) {
+    const router = this.mapService.getRoute(undefined, destination);
+
+    return new Promise((resolve) => {
+      router.model.events.add('requestsuccess', (event) => {
+      const routes = event.get('target').getRoutes();
+      if (routes && routes.length) {
+        const route = routes[0];
+        resolve({route, router});
       }
-    };
-  });
+    });
+
+    });
+  }
+
+  addRouteToCollection(route) {
+    this.mapService.addRouteToCollection(route, this.routesCollection);
+  }
+
+  displayGenericRoute(router) {
+    this.mapService.map.geoObjects.add(router);
+  }
+
+  saveCurrentRoute() {
+    this.mapService.addRouteToCollection(this.currentRoute, this.mapService.routesCollection);
+  }
+
+  changeDate($event) {
+    this.filteredTime = $event;
+    this.hours = new Date(this.filteredTime).getHours();
+    console.log(this.filteredTime);
+    console.log(new Date(this.filteredTime).getHours());
+  }
 }

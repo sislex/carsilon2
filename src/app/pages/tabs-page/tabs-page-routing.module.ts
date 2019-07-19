@@ -4,6 +4,7 @@ import { TabsPage } from './tabs-page';
 import { SchedulePage } from '../schedule/schedule';
 import {RoutesPage} from '../routes/routes.page';
 import {DestinationFormPage} from '../destination-form/destination-form.page';
+import {Guard} from '../../guard';
 
 
 const routes: Routes = [
@@ -33,16 +34,25 @@ const routes: Routes = [
           }
         ]
       },
+      // {
+      //   path: 'schedule',
+      //   children: [
+      //     {
+      //       path: '',
+      //       component: SchedulePage,
+      //     },
+      //     {
+      //       path: 'session/:sessionId',
+      //       loadChildren: '../session-detail/session-detail.module#SessionDetailModule'
+      //     }
+      //   ]
+      // },
       {
         path: 'schedule',
         children: [
           {
             path: '',
-            component: SchedulePage,
-          },
-          {
-            path: 'session/:sessionId',
-            loadChildren: '../session-detail/session-detail.module#SessionDetailModule'
+            loadChildren: '../map/map.module#MapModule'
           }
         ]
       },
@@ -65,6 +75,7 @@ const routes: Routes = [
       },
       {
         path: 'map',
+        canActivate: [Guard],
         children: [
           {
             path: '',
@@ -83,7 +94,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/app/tabs/schedule',
+        redirectTo: '/app/tabs/map',
         pathMatch: 'full'
       }
     ]
