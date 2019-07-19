@@ -4,6 +4,7 @@ import { TabsPage } from './tabs-page';
 import { SchedulePage } from '../schedule/schedule';
 import {RoutesPage} from '../routes/routes.page';
 import {DestinationFormPage} from '../destination-form/destination-form.page';
+import {Guard} from '../../guard';
 
 
 const routes: Routes = [
@@ -65,6 +66,7 @@ const routes: Routes = [
       },
       {
         path: 'map',
+        canActivate: [Guard],
         children: [
           {
             path: '',

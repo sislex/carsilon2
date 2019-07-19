@@ -61,7 +61,8 @@ export class MapService {
   async displayRoutes(routesCollection) {
     if (routesCollection && routesCollection.length) {
       this.routesCollection = await Promise.all(routesCollection.map(async (item) => {
-        const {route} = await this.generateRoute(undefined, item.addressFinish);
+        const result = await this.generateRoute(undefined, item.addressFinish);
+        const route = result.route;
         const segments = route.getPaths()[0].getSegments();
         let allPoints = [];
         segments.forEach((segment) => {
@@ -83,7 +84,6 @@ export class MapService {
       }
       this.displayColorfulRoutesCollection(this.routesCollection);
     }
-    debugger
 
   }
 
@@ -105,10 +105,10 @@ export class MapService {
 
   clearMap() {
     this.map.geoObjects.removeAll();
-    this.addPoint(this.officeCoordinates);
+    this.addPoint(this.officeCoordinates, '#228B22', null, 'Tolstogo 10');
   }
 
-  generateRoute(from = this.officeCoordinates, to) {
+  generateRoute(from = this.officeCoordinates, to): any {
     const router = this.getRoute(undefined, to);
 
     return new Promise((resolve) => {

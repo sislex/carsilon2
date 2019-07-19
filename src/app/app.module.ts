@@ -15,6 +15,7 @@ import {AmplifyService} from 'aws-amplify-angular';
 import {AuthService} from './services/auth';
 import {MapComponent} from './components/map/map.component';
 import {RoutesService} from './services/routes.service';
+import {Guard} from './guard';
 
 @NgModule({
   imports: [
@@ -31,7 +32,7 @@ import {RoutesService} from './services/routes.service';
     AppComponent,
     MapComponent
   ],
-  providers: [InAppBrowser, SplashScreen, StatusBar, AmplifyService, AuthService, RoutesService],
+  providers: [InAppBrowser, SplashScreen, StatusBar, AmplifyService, AuthService, RoutesService, Guard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -10,10 +10,10 @@ export class MapComponent implements OnInit {
 
   constructor(
     public mapService: MapService
-  ) { debugger }
+  ) { }
 
   ngOnInit() {
-    debugger
+
   }
 
   ngAfterViewInit() {
