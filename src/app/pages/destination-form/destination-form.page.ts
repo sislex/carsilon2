@@ -15,7 +15,7 @@ export class DestinationFormPage implements OnInit {
   }
 
   submitDestination() {
-    this.mapService.myDestination = this.destination;
+    this.mapService.myDestination = [53.907816, 27.504330];
   }
 
   setDestination($event) {

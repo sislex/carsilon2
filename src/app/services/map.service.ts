@@ -58,10 +58,14 @@ export class MapService {
     this.routesCollection = getSortedRoutes(this.routesCollection, to);
   }
 
-  getCoordinates(coordinates) {
-    if (coordinates) {
+  async getCoordinates(coordinates) {
+    return new Promise((resolve) => {
+      if (typeof coordinates === 'string') {
+        resolve(this.mapsModule.geocode)
 
-    }
+      }
+    });
+
   }
 
   async displayRoutes(routesCollection) {
@@ -80,14 +84,14 @@ export class MapService {
 
     this.clearMap();
     if (this.myDestination) {
-      this.addPoint(this.myDestination);
+      this.addPlacemark();
     }
     // this.displayColorfulRoutesCollection([this.routesCollection[0]]);
     if (this.routesCollection && this.routesCollection.length) {
       if (this.myDestination) {
-        if (typeof this.myDestination === 'string') {
-          this.myDestination = await this.mapsModule.geocode(this.myDestination);
-        }
+        // if (typeof this.myDestination === 'string') {
+        //   this.myDestination = await this.mapsModule.geocode(this.myDestination);
+        // }
         this.getFilteredRoutes(this.myDestination);
       }
       this.displayColorfulRoutesCollection(this.routesCollection);
@@ -97,19 +101,11 @@ export class MapService {
   }
 
   addPlacemark() {
-    const placemark = new ymaps.Placemark(myMap.getCenter(), {
-      balloonContentBody: [
-        '<address>',
-        '<strong>Офис Яндекса в Москве</strong>',
-        '<br/>',
-        'Адрес: 119021, Москва, ул. Льва Толстого, 16',
-        '<br/>',
-        'Подробнее: <a href="https://company.yandex.ru/">https://company.yandex.ru</a>',
-        '</address>'
-      ].join('')
-    }, {
+    const placemark = new this.mapsModule.Placemark(this.myDestination, {}, {
       preset: 'islands#redDotIcon'
     });
+
+    this.map.geoObjects.add(placemark);
 
   }
 
@@ -211,9 +207,30 @@ export class MapService {
       }
     }, {
       // Иконка метки будет растягиваться под размер ее содержимого.
-      // preset: 'islands#blackStretchyIcon',
-      // draggable: true,
-      // fillColor: color,
+      preset: 'islands##blackStretchyIcon',
+      fillColor: color,
+    });
+
+    this.map.geoObjects.add(point);
+  }
+
+  async addDestinationPointMark(coordinates: any = this.officeCoordinates, hintContent: string = '') {
+    if (typeof coordinates === 'string') {
+      coordinates = await this.mapsModule.geocode(coordinates);
+    }
+
+    const point = new this.mapsModule.GeoObject({
+      // Описание геометрии.
+      geometry: {
+        type: 'Point',
+        coordinates
+      },
+      properties: {
+        hintContent
+      }
+    }, {
+      // Иконка метки будет растягиваться под размер ее содержимого.
+      preset: 'islands#redDotIcon',
     });
 
     this.map.geoObjects.add(point);
