@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import {AmplifyService} from 'aws-amplify-angular';
 import {AuthService} from './services/auth';
 import {MapComponent} from './components/map/map.component';
+import {RoutesService} from './services/routes.service';
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ import {MapComponent} from './components/map/map.component';
     AppComponent,
     MapComponent
   ],
-  providers: [InAppBrowser, SplashScreen, StatusBar, AmplifyService, AuthService],
+  providers: [InAppBrowser, SplashScreen, StatusBar, AmplifyService, AuthService, RoutesService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

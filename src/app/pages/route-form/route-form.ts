@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {API, graphqlOperation} from 'aws-amplify';
 import * as mutations from '../../../graphql/mutations';
+import {MapService} from '../../services/map.service';
+import {AuthService} from '../../services/auth';
+import {RoutesService} from '../../services/routes.service';
 
 @Component({
   selector: 'page-session-detail',
@@ -8,10 +11,13 @@ import * as mutations from '../../../graphql/mutations';
   templateUrl: 'route-form.html'
 })
 export class RouteFormPage {
+  constructor(public mapService: MapService, public authService: AuthService, public routesService: RoutesService) {
+
+  }
 
   myDate;
   public drive = {
-    addressStart: '',
+    addressStart: 'Belarus, Minsk, vulica Talstoha',
     addressFinish: '',
     coordinatesStart: 'coordinatesStart',
     coordinatesFinish: 'coordinatesFinish',
@@ -21,13 +27,18 @@ export class RouteFormPage {
   };
 
   async addRoute() {
-    console.log(this.myDate);
-    console.log(this.drive);
-    const newRoute = await API.graphql(graphqlOperation(mutations.createRoutes, {input: this.drive}));
+    console.log(new Date(this.drive.timeStart).getTime());
+
+    const newRoute = await this.routesService.addRoute(this.drive);
     console.log(newRoute);
   }
 
   changeDate(qwe) {
     console.log(qwe);
+  }
+
+  setAddress($event) {
+    this.drive.addressFinish = $event.value;
+    this.mapService.myDestination = this.drive.addressFinish;
   }
 }

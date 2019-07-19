@@ -22,6 +22,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
+  exports: [
+    SearchFieldComponent
+  ],
   declarations: [
     RoutesPage,
     SearchFieldComponent
