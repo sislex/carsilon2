@@ -266,7 +266,7 @@ export class MapService {
 
   getBalloonHeader() {
     const routeInfo = {
-      name:'Andrew Visokih',
+      name:'Andrew Carowner',
       photo:"https://www.w3schools.com/html/pic_trulli.jpg",
       destination:'vulica Husoŭskaha 64-61, Minsk, Republic of Belarus',
       departure:'11:40 PM',
