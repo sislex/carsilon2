@@ -33,16 +33,25 @@ const routes: Routes = [
           }
         ]
       },
+      // {
+      //   path: 'schedule',
+      //   children: [
+      //     {
+      //       path: '',
+      //       component: SchedulePage,
+      //     },
+      //     {
+      //       path: 'session/:sessionId',
+      //       loadChildren: '../session-detail/session-detail.module#SessionDetailModule'
+      //     }
+      //   ]
+      // },
       {
         path: 'schedule',
         children: [
           {
             path: '',
-            component: SchedulePage,
-          },
-          {
-            path: 'session/:sessionId',
-            loadChildren: '../session-detail/session-detail.module#SessionDetailModule'
+            loadChildren: '../map/map.module#MapModule'
           }
         ]
       },
@@ -83,7 +92,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/app/tabs/schedule',
+        redirectTo: '/app/tabs/map',
         pathMatch: 'full'
       }
     ]
