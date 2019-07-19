@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { DestinationFormPage } from './destination-form.page';
 import {RoutesPageModule} from '../routes/routes.module';
+import {SearchFieldComponent} from '../../components/search-field/search-field.component';
 
 const routes: Routes = [
   {
@@ -21,8 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    RoutesPageModule
+    RoutesPageModule,
   ],
-  declarations: [DestinationFormPage]
+  declarations: [DestinationFormPage],
 })
 export class DestinationFormPageModule {}

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {API, graphqlOperation} from 'aws-amplify';
 import * as mutations from '../../../graphql/mutations';
+import {MapService} from '../../services/map.service';
 
 @Component({
   selector: 'page-session-detail',
@@ -8,6 +9,9 @@ import * as mutations from '../../../graphql/mutations';
   templateUrl: 'route-form.html'
 })
 export class RouteFormPage {
+  constructor(public mapService: MapService) {
+
+  }
 
   myDate;
   public drive = {
@@ -34,5 +38,6 @@ export class RouteFormPage {
 
   setAddress($event) {
     this.drive.addressFinish = $event.value;
+    this.mapService.myDestination = this.drive.addressFinish;
   }
 }

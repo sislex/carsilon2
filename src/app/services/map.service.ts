@@ -37,7 +37,7 @@ export class MapService {
   public destinations: any = [];
   public routesCollection: any = [];
   public allRoutes: any = [];
-  public myDestination = [53.910092, 27.519727];
+  public myDestination: any = [53.910092, 27.519727];
 
   public colors = ['#4287f5', '#1518bd', '#ed152b', '#16b84f', '#7e29b3', '#754805',
     '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -69,10 +69,13 @@ export class MapService {
 
         return new Route(null, null, allPoints);
       }));
-    setTimeout(() => {
+
+      this.clearMap();
       this.getFilteredRoutes(this.myDestination);
-      this.displayColorfulRoutesCollection([this.routesCollection[0]]);
-    }, 2000);
+      // this.displayColorfulRoutesCollection([this.routesCollection[0]]);
+      this.displayColorfulRoutesCollection(this.routesCollection);
+      debugger
+      this.addPoint(this.myDestination);
   }
 
   async fetchRoutes() {
@@ -111,7 +114,9 @@ export class MapService {
   displayRouteByPoints(route, color, info) {
     const polyline = new this.mapsModule.Polyline(route.allPoints, {
         balloonContent: info,
-        balloonContentBody: `<b>${info}</b>`
+        balloonContentHeader: this.getBalloonHeader(),
+        balloonContentBody: this.getBalloonContent(),
+        balloonContentFooter: this.getBalloonFooter()
       }, {
         strokeWidth: 6,
         strokeOpacity: 0.8,
@@ -154,7 +159,11 @@ export class MapService {
     searchControl.events.add('resultshow', (data) => getResultHandler(data));
   }
 
-  addPoint(coordinates = this.officeCoordinates, color, iconContent: string = '', hintContent: string = '') {
+  async addPoint(coordinates: any = this.officeCoordinates, color, iconContent: string = '', hintContent: string = '') {
+    if (typeof coordinates === 'string') {
+      coordinates = await this.mapsModule.geocode(coordinates);
+    }
+
     const point = new this.mapsModule.GeoObject({
       // Описание геометрии.
       geometry: {
@@ -174,4 +183,132 @@ export class MapService {
 
     this.map.geoObjects.add(point);
   }
+
+  getBalloonContent() {
+    const routeInfo = {
+      name:'Andrew Visokih',
+      photo:"https://www.w3schools.com/html/pic_trulli.jpg",
+      destination:'vulica Husoŭskaha 64-61, Minsk, Republic of Belarus',
+      departure:'11:40 PM',
+      phone:'+37529 999 99 99'
+    };
+
+    return `<style>
+        .info{
+          position:absolute;
+          left:20px; 
+          top:220px;
+          right:20px;
+          bottom:50px;
+          //background-color: grey;
+          text-align: left;
+          overflow: hidden;
+        }
+        .info div {
+          /*//height: 30px;*/
+          font-size:18px;
+          line-height: 25px;
+          color: black;
+        }
+        .call-btn {
+          //background: red;
+          position:absolute;
+          
+          top:350px;
+          right:10px;
+          bottom:10px;
+          left:10px; 
+        }
+</style>`+
+        '<div class="info" >' +
+        '<div><b>Destination:</b>' + routeInfo.destination+ '</div>' +
+        '<div><b>Departure:</b>' + routeInfo.departure+ '</div>';
+  }
+
+  getBalloonHeader() {
+    const routeInfo = {
+      name:'Andrew Visokih',
+      photo:"https://www.w3schools.com/html/pic_trulli.jpg",
+      destination:'vulica Husoŭskaha 64-61, Minsk, Republic of Belarus',
+      departure:'11:40 PM',
+      phone:'+37529 999 99 99'
+    };
+
+    return `
+      <style>
+        .header-container {
+          width: 100%;
+          height: 80px;
+          display: flex;
+          justify-content: space-between;
+        }
+        
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 40px;
+        }
+        
+        .name {
+          align-self: center;
+          flex-wrap: wrap;
+          font-size: 17px;
+          width: 50%;
+          line-height: 23px;
+        }
+        
+      </style>
+      <div class="header-container">
+        <img src="${routeInfo.photo}">
+        <div class="name">${routeInfo.name}</div>
+      </div>
+    `;
+  }
+
+  getBalloonFooter() {
+    const routeInfo = {
+      name:'Andrew Visokih',
+      photo:"https://www.w3schools.com/html/pic_trulli.jpg",
+      destination:'vulica Husoŭskaha 64-61, Minsk, Republic of Belarus',
+      departure:'11:40 PM',
+      phone:'+37529 999 99 99'
+    };
+
+    return `
+      <style>
+        .footer-container {
+          width: 100%;
+          height: 80px;
+          display: flex;
+        }
+        
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 40px;
+        }
+        
+        .name {
+          align-self: center;
+          flex-wrap: wrap;
+          font-size: 17px;
+          width: 50%;
+          line-height: 23px;
+        }
+        
+        .call-btn button{
+          position: static;
+          width:100%;
+          height:100%;
+          border-radius: 2px;
+        }
+        
+      </style>
+      <div class="footer-container">
+        <div><b>Phone:</b>${routeInfo.phone}</div>
+        <div class="call-btn"><button onclick="doCall()">Call Driver</button></div>
+      </div>
+    `;
+  }
+
 }
